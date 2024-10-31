@@ -23,7 +23,7 @@ provide the basic kernel functionalities (UART, interrupt hardware, ...)
 :warning: **At the moment userland drivers are not implemented**
 
 ## Try it out
-Choose your desired board:
+Choose your desired board and `cd` to the corresponding directory:
 - Qemu RISC-V (virt) --> `riscv_qemuvirt`
 - Qemu AArch64 (virt) --> `aarch64_qemuvirt`
 
@@ -43,22 +43,10 @@ If you use Nix you can run `nix develop` to get a shell with everything needed
 to test GoOSe
 
 ### Build
-#### Board project
+### Board project
 Go to a board project (ex. riscv_qemuvirt) and then:
 ```console
 $ cargo build
-```
-
-#### Kernel, hal, ...
-When building, you need to specify which target triplet to use with 
-`--target <triplet_here>`. Here is the list of triplet to use depending on the 
-targeted architecture:
-- RISC-V --> `riscv64gc-unknown-none-elf`
-- AArch64 --> `aarch64-unknown-none`
-
-Go to the component folder and then:
-```console
-$ cargo build --target <triplet_here>
 ```
 
 ### Tests
@@ -67,10 +55,7 @@ result over serial. When using Qemu, you can also have an exit code != 0 on
 failure.
 
 ```console
-$ make -C kernel/fixtures <triplet_here>
-...
-$ cargo tests --bin <bin_here> --target <triplet_here>
-...
+$ cargo run -F launch_tests
 ```
 :warning: **Tests might be slow to run as GoOSe is not really optimized. You can
 append `--release` to the previous cargo command line to boost performance but 
